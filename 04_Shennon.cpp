@@ -1,6 +1,6 @@
-//Автор: Закусилов Игорь Анатольевич
-//Версия компилятора: mingw-5.2.0 g++ 
-//Cтандарт c++98
+//РђРІС‚РѕСЂ: Р—Р°РєСѓСЃРёР»РѕРІ РРіРѕСЂСЊ РђРЅР°С‚РѕР»СЊРµРІРёС‡
+//Р’РµСЂСЃРёСЏ РєРѕРјРїРёР»СЏС‚РѕСЂР°: mingw-5.2.0 g++ 
+//CС‚Р°РЅРґР°СЂС‚ c++98
 #include <iostream>
 #include <vector>
 #include <stdlib.h> 
@@ -10,7 +10,7 @@ using namespace std;
 
 vector<vector<bool> > Shennon(vector<int>);
 bool Test(vector<vector<bool> >);
-//массив кодовых слов
+//РјР°СЃСЃРёРІ РєРѕРґРѕРІС‹С… СЃР»РѕРІ
 
 int main()
 {
@@ -25,7 +25,7 @@ int main()
     int counter = 1, max = -1, curLen;
     vector<int> lenghts;
     double kraft = 0;
-    //вводим длины слов
+    //РІРІРѕРґРёРј РґР»РёРЅС‹ СЃР»РѕРІ
     while (wordsCount--)
     {
         cout << "Enter the length of the word number " << counter++ << ": ";
@@ -45,7 +45,7 @@ int main()
         }
         kraft += pow(2, -curLen);
     }
-    //проверяем неравенство крафта
+    //РїСЂРѕРІРµСЂСЏРµРј РЅРµСЂР°РІРµРЅСЃС‚РІРѕ РєСЂР°С„С‚Р°
     if (kraft > 1)
     {
         cout << "Doesn't satisfy the Kraft's inequality" << endl;
@@ -62,21 +62,21 @@ int main()
     _getch();
     return 1;
 }
-//Метод Шеннона конструирования двоичных префиксных  кодов  по заданным длинам кодовых слов
+//РњРµС‚РѕРґ РЁРµРЅРЅРѕРЅР° РєРѕРЅСЃС‚СЂСѓРёСЂРѕРІР°РЅРёСЏ РґРІРѕРёС‡РЅС‹С… РїСЂРµС„РёРєСЃРЅС‹С…  РєРѕРґРѕРІ  РїРѕ Р·Р°РґР°РЅРЅС‹Рј РґР»РёРЅР°Рј РєРѕРґРѕРІС‹С… СЃР»РѕРІ
 vector<vector<bool> > Shennon(vector<int> lenghts)
 {
     vector<vector<bool> > words;
-    //строим слова
+    //СЃС‚СЂРѕРёРј СЃР»РѕРІР°
     words.push_back(vector<bool>(lenghts[0]));
     vector<bool> prev;
     for (int i = 1; i < lenghts.size(); i++)
     {
         int length = lenghts[i], reminder = 0;
         prev.resize(length);
-        //получаем текущее значение 
+        //РїРѕР»СѓС‡Р°РµРј С‚РµРєСѓС‰РµРµ Р·РЅР°С‡РµРЅРёРµ 
         vector<bool> value(length), sum;
         value[lenghts[i - 1] - 1] = 1;
-        //складываем двоичные числа с плавающей точкой
+        //СЃРєР»Р°РґС‹РІР°РµРј РґРІРѕРёС‡РЅС‹Рµ С‡РёСЃР»Р° СЃ РїР»Р°РІР°СЋС‰РµР№ С‚РѕС‡РєРѕР№
         while (length--)
         {
             sum.insert(sum.begin(), (value.back() + prev.back() + reminder) % 2);
@@ -91,12 +91,12 @@ vector<vector<bool> > Shennon(vector<int> lenghts)
 }
 bool Test(vector<vector<bool> > words)
 {
-    //сравниваем попарно слова
+    //СЃСЂР°РІРЅРёРІР°РµРј РїРѕРїР°СЂРЅРѕ СЃР»РѕРІР°
     for (int i = 0; i < words.size(); i++)
     {
         for (int j = i + 1; j < words.size(); j++)
         {
-            //сравниваем пары посимвольно
+            //СЃСЂР°РІРЅРёРІР°РµРј РїР°СЂС‹ РїРѕСЃРёРјРІРѕР»СЊРЅРѕ
             bool test = false;
             for (int k = 0; k < words[i].size(); k++)
             {

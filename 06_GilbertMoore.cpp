@@ -1,6 +1,6 @@
-//Автор: Закусилов Игорь Анатольевич
-//Версия компилятора: mingw-5.2.0 g++ 
-//Cтандарт c++98
+//РђРІС‚РѕСЂ: Р—Р°РєСѓСЃРёР»РѕРІ РРіРѕСЂСЊ РђРЅР°С‚РѕР»СЊРµРІРёС‡
+//Р’РµСЂСЃРёСЏ РєРѕРјРїРёР»СЏС‚РѕСЂР°: mingw-5.2.0 g++ 
+//CС‚Р°РЅРґР°СЂС‚ c++98
 #include <iostream>
 #include <string>
 #include <vector>
@@ -26,7 +26,7 @@ int main()
             cout << words[i].second[j];
     }
     cout << endl << endl;
-    //красивый вывод
+    //РєСЂР°СЃРёРІС‹Р№ РІС‹РІРѕРґ
     string s1 = "", s2 = "", s3 = "";
     for (int i = 0; i < input.length(); i++)
     {
@@ -53,19 +53,19 @@ int main()
     _getch();
     return 1;
 }
-//Функция, реализующая алгоритм построения кода Гилберта-Мура
+//Р¤СѓРЅРєС†РёСЏ, СЂРµР°Р»РёР·СѓСЋС‰Р°СЏ Р°Р»РіРѕСЂРёС‚Рј РїРѕСЃС‚СЂРѕРµРЅРёСЏ РєРѕРґР° Р“РёР»Р±РµСЂС‚Р°-РњСѓСЂР°
 vector<pair<char, vector<bool> > > GilbertMoore(string input)
 {
     vector<pair<char, vector<bool> > > words;
     vector<pair<char, double> > dictionary;
     for (int i = 0; i < input.length(); i++)
     {
-        //считаем количество букв
+        //СЃС‡РёС‚Р°РµРј РєРѕР»РёС‡РµСЃС‚РІРѕ Р±СѓРєРІ
         for (int j = 0; j < dictionary.size(); j++)
         {
             if (dictionary[j].first == input[i])
             {
-                //высчитываем частоты
+                //РІС‹СЃС‡РёС‚С‹РІР°РµРј С‡Р°СЃС‚РѕС‚С‹
                 dictionary[j].second += 1.0 / input.length();
                 goto outer;
             }
@@ -73,7 +73,7 @@ vector<pair<char, vector<bool> > > GilbertMoore(string input)
         dictionary.push_back(pair<char, double>(input[i], 1.0 / input.length()));
     outer:;
     }
-    //Образуем суммы частот
+    //РћР±СЂР°Р·СѓРµРј СЃСѓРјРјС‹ С‡Р°СЃС‚РѕС‚
     vector<double> q, d;
     q.push_back(0);
     d.push_back(dictionary[0].second / 2);
@@ -82,11 +82,11 @@ vector<pair<char, vector<bool> > > GilbertMoore(string input)
         q.push_back(q[i] + dictionary[i].second);
         d.push_back(q.back() + (dictionary[i + 1].second) / 2);
     }
-    //строим слова
+    //СЃС‚СЂРѕРёРј СЃР»РѕРІР°
     for (int i = 0; i < dictionary.size(); i++)
     {
         vector<bool> word;
-        //переводим вещественные числа в двоичную систему
+        //РїРµСЂРµРІРѕРґРёРј РІРµС‰РµСЃС‚РІРµРЅРЅС‹Рµ С‡РёСЃР»Р° РІ РґРІРѕРёС‡РЅСѓСЋ СЃРёСЃС‚РµРјСѓ
         int digit = 1 + ceil(-log2(dictionary[i].second));
         d[i] *= 2;
         for (int j = 1; j < digit; j++)
@@ -102,12 +102,12 @@ vector<pair<char, vector<bool> > > GilbertMoore(string input)
 }
 bool Test(vector<pair<char, vector<bool> > > words)
 {
-    //сравниваем попарно слова
+    //СЃСЂР°РІРЅРёРІР°РµРј РїРѕРїР°СЂРЅРѕ СЃР»РѕРІР°
     for (int i = 0; i < words.size(); i++)
     {
         for (int j = i + 1; j < words.size(); j++)
         {
-            //сравниваем пары посимвольно
+            //СЃСЂР°РІРЅРёРІР°РµРј РїР°СЂС‹ РїРѕСЃРёРјРІРѕР»СЊРЅРѕ
             bool test = false;
             for (int k = 0; k < words[i].second.size() && k < words[j].second.size(); k++)
             {

@@ -1,6 +1,6 @@
-//Автор: Закусилов Игорь Анатольевич
-//Версия компилятора: mingw-5.2.0 g++ 
-//Cтандарт c++98
+//РђРІС‚РѕСЂ: Р—Р°РєСѓСЃРёР»РѕРІ РРіРѕСЂСЊ РђРЅР°С‚РѕР»СЊРµРІРёС‡
+//Р’РµСЂСЃРёСЏ РєРѕРјРїРёР»СЏС‚РѕСЂР°: mingw-5.2.0 g++ 
+//CС‚Р°РЅРґР°СЂС‚ c++98
 #include <iostream>
 #include <vector>
 #include <utility> 
@@ -26,7 +26,7 @@ int main()
             cout << words[i].second[j];
     }
     cout << endl << endl;
-    //красивый вывод
+    //РєСЂР°СЃРёРІС‹Р№ РІС‹РІРѕРґ
     string s1 = "", s2 = "", s3 = "";
     for (int i = 0; i < input.length(); i++)
     {
@@ -56,19 +56,19 @@ int main()
 
 bool Comparer(pair<char, double> a, pair<char, double> b) { return (a.second > b.second); }
 
-//Функция, реализующая алгоритм построения кода Шеннона - Фано
+//Р¤СѓРЅРєС†РёСЏ, СЂРµР°Р»РёР·СѓСЋС‰Р°СЏ Р°Р»РіРѕСЂРёС‚Рј РїРѕСЃС‚СЂРѕРµРЅРёСЏ РєРѕРґР° РЁРµРЅРЅРѕРЅР° - Р¤Р°РЅРѕ
 vector<pair<char, vector<bool> > > ShennonFano(string input)
 {
     vector<pair<char, vector<bool> > > words;
     vector<pair<char, double> > dictionary;
     for (int i = 0; i < input.length(); i++)
     {
-        //считаем количество букв
+        //СЃС‡РёС‚Р°РµРј РєРѕР»РёС‡РµСЃС‚РІРѕ Р±СѓРєРІ
         for (int j = 0; j < dictionary.size(); j++)
         {
             if (dictionary[j].first == input[i])
             {
-                //высчитываем частоты
+                //РІС‹СЃС‡РёС‚С‹РІР°РµРј С‡Р°СЃС‚РѕС‚С‹
                 dictionary[j].second += 1.0 / input.length();
                 goto outer;
             }
@@ -76,18 +76,18 @@ vector<pair<char, vector<bool> > > ShennonFano(string input)
         dictionary.push_back(make_pair(input[i], 1.0 / input.length()));
     outer:;
     }
-    //сортируем по убыванию частот
+    //СЃРѕСЂС‚РёСЂСѓРµРј РїРѕ СѓР±С‹РІР°РЅРёСЋ С‡Р°СЃС‚РѕС‚
     sort(dictionary.begin(), dictionary.end(), Comparer);
-    //Образуем возрастающие суммы частот
+    //РћР±СЂР°Р·СѓРµРј РІРѕР·СЂР°СЃС‚Р°СЋС‰РёРµ СЃСѓРјРјС‹ С‡Р°СЃС‚РѕС‚
     vector<double> q;
     q.push_back(0);
     for (int i = 0; i < dictionary.size() - 1; i++)
         q.push_back(q[i] + dictionary[i].second);
-    //строим слова
+    //СЃС‚СЂРѕРёРј СЃР»РѕРІР°
     for (int i = 0; i < dictionary.size(); i++)
     {
         vector<bool> word;
-        //переводим вещественные числа в двоичную систему
+        //РїРµСЂРµРІРѕРґРёРј РІРµС‰РµСЃС‚РІРµРЅРЅС‹Рµ С‡РёСЃР»Р° РІ РґРІРѕРёС‡РЅСѓСЋ СЃРёСЃС‚РµРјСѓ
         int digit = ceil(-log2(dictionary[i].second));
         q[i] *= 2;
         for (int j = 1; j < digit; j++)
@@ -104,12 +104,12 @@ vector<pair<char, vector<bool> > > ShennonFano(string input)
 
 bool Test(vector<pair<char, vector<bool> > > words)
 {
-    //сравниваем попарно слова
+    //СЃСЂР°РІРЅРёРІР°РµРј РїРѕРїР°СЂРЅРѕ СЃР»РѕРІР°
     for (int i = 0; i < words.size(); i++)
     {
         for (int j = i + 1; j < words.size(); j++)
         {
-            //сравниваем пары посимвольно
+            //СЃСЂР°РІРЅРёРІР°РµРј РїР°СЂС‹ РїРѕСЃРёРјРІРѕР»СЊРЅРѕ
             bool test = false;
             for (int k = 0; k < words[i].second.size(); k++)
             {
@@ -126,5 +126,3 @@ bool Test(vector<pair<char, vector<bool> > > words)
     cout << "\nTest completed successfully! The code is prefixed" << endl;
     return true;
 }
-
-
