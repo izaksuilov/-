@@ -1,6 +1,6 @@
-//Автор: Закусилов Игорь Анатольевич
-//Версия компилятора: mingw-5.2.0 g++ 
-//Cтандарт c++98
+//РђРІС‚РѕСЂ: Р—Р°РєСѓСЃРёР»РѕРІ РРіРѕСЂСЊ РђРЅР°С‚РѕР»СЊРµРІРёС‡
+//Р’РµСЂСЃРёСЏ РєРѕРјРїРёР»СЏС‚РѕСЂР°: mingw-5.2.0 g++ 
+//CС‚Р°РЅРґР°СЂС‚ c++98
 #include <iostream>
 #include <vector>
 #include <utility> 
@@ -32,19 +32,19 @@ int main()
 
 bool Comparer(pair<string, double> a, pair<string, double> b) { return (a.second > b.second); }
 
-//Функция, реализующая cтатический алгоритм Хаффмана
+//Р¤СѓРЅРєС†РёСЏ, СЂРµР°Р»РёР·СѓСЋС‰Р°СЏ cС‚Р°С‚РёС‡РµСЃРєРёР№ Р°Р»РіРѕСЂРёС‚Рј РҐР°С„С„РјР°РЅР°
 map<char, vector<bool> > Huffman(string input)
 {
     map<char, vector<bool> > words;
     vector<pair<string, double> > dictionary;
     for (int i = 0; i < input.length(); i++)
     {
-        //считаем количество букв
+        //СЃС‡РёС‚Р°РµРј РєРѕР»РёС‡РµСЃС‚РІРѕ Р±СѓРєРІ
         for (int j = 0; j < dictionary.size(); j++)
         {
             if (dictionary[j].first[0] == input[i])
             {
-                //высчитываем частоты
+                //РІС‹СЃС‡РёС‚С‹РІР°РµРј С‡Р°СЃС‚РѕС‚С‹
                 dictionary[j].second += 1.0 / input.length();
                 goto outer;
             }
@@ -55,7 +55,7 @@ map<char, vector<bool> > Huffman(string input)
     sort(dictionary.begin(), dictionary.end(), Comparer);
     for (int i = 0; i < dictionary.size(); i++)
         words[dictionary[i].first[0]] = vector<bool>();
-    //объединяем буквы и строим слова
+    //РѕР±СЉРµРґРёРЅСЏРµРј Р±СѓРєРІС‹ Рё СЃС‚СЂРѕРёРј СЃР»РѕРІР°
     while (dictionary.size() > 1)
     {
         for (int k = dictionary.size() - 1; k > 0; k--)
@@ -75,12 +75,12 @@ map<char, vector<bool> > Huffman(string input)
 
 bool Test(map<char, vector<bool> > words)
 {
-    //сравниваем попарно слова
+    //СЃСЂР°РІРЅРёРІР°РµРј РїРѕРїР°СЂРЅРѕ СЃР»РѕРІР°
     for (std::map<char, vector<bool> >::iterator it = words.begin(), it2 = it; it != words.end(); it++, it2 = it)
     {
         for (std::map<char, vector<bool> >::iterator jt = ++it2; jt != words.end(); jt++)
         {
-            //сравниваем пары посимвольно
+            //СЃСЂР°РІРЅРёРІР°РµРј РїР°СЂС‹ РїРѕСЃРёРјРІРѕР»СЊРЅРѕ
             bool test = false;
             for (int k = 0; k < it->second.size() && k < jt->second.size(); k++)
             {
