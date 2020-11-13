@@ -2,14 +2,12 @@
 //Версия компилятора: mingw-5.2.0 g++ 
 //Cтандарт c++98
 #include <iostream>
+#include <stdlib.h>
 #include <string>
 #include <map>
 #include <vector>
 #include <conio.h>
 using namespace std;
-
-//Важное примечание!
-//Для компилятора g++ указать атрибут -std=c++11
 
 vector<vector<int> > LZ78(string);
 string DecodeLZ78(vector<vector<int> >);
@@ -27,7 +25,7 @@ int main()
     string decoded = DecodeLZ78(result);
     cout << "\n\nInput string: " << input << "\nDecoded:      " << decoded << endl
         << (decoded == input ? "The strings are equal!" : "The strings are not equal!") << endl;
-    //Test();
+    Test();
     _getch();
     return 1;
 }
@@ -44,7 +42,8 @@ vector<vector<int> > LZ78(string input)
         //если нет сивола, то добавляем в буфер
         while (!found && input[i] != '\0')
         {
-            letters.push_back({ 0,input[i] });
+            vector<int> letter(1); letter.push_back(input[i]);
+            letters.push_back(letter);
             cout << "(" << buffer.size() + 1 << ",\"" << string(1, input[i]) << "\") ";
             buffer.insert(make_pair(string(1, input[i]), buffer.size() + 1));
             found = buffer.count(string(1, input[++i]));
@@ -59,8 +58,10 @@ vector<vector<int> > LZ78(string input)
             found = buffer.count(match + input[++i]);
         } while (found && input[i] != '\0');
 
-        letters.push_back({ buffer[match],//такая-то группа в словаре
-                            input[i] });//такой-то символ
+        vector<int> letter;
+        letter.push_back(buffer[match]);//такая-то группа в словаре
+        letter.push_back(input[i]);//такой-то символ
+        letters.push_back(letter);
         cout << "(" << buffer.size() + 1 << ",\"" << match + input[i] << "\") ";
         buffer.insert(make_pair(match + input[i], buffer.size() + 1));
     }

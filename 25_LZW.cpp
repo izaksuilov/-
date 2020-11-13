@@ -5,12 +5,10 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <stdlib.h>
 #include <algorithm> 
 #include <conio.h>
 using namespace std;
-
-//Важное примечание!
-//Для компилятора g++ указать атрибут -std=c++11
 
 pair<vector<int>, map<string, int> > LZW(string);
 string DecodeLZW(pair<vector<int>, map<string, int> >);
@@ -33,6 +31,9 @@ int main()
     _getch();
     return 1;
 }
+
+bool Comparer(pair<string, int> a, pair<string, int> b) { return (a.second < b.second); }
+
 //Функция, реализующая алгоритм LZW
 pair<vector<int>, map<string, int> > LZW(string input)
 {
@@ -56,10 +57,10 @@ pair<vector<int>, map<string, int> > LZW(string input)
         match = "";
     }
 
-    vector<pair<string, int>> vec;
+    vector<pair<string, int> > vec;
     for (map<string, int> ::iterator it = buffer.begin(); it != buffer.end(); it++)
         vec.push_back(make_pair(it->first, it->second));
-    sort(vec.begin(), vec.end(), [](pair<string, int> a, pair<string, int> b) { return (a.second < b.second); });
+    sort(vec.begin(), vec.end(), Comparer);
 
     cout << endl << "The dictionary is: " << endl;
     for (int i = 0; i < vec.size(); i++)
