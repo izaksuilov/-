@@ -3,12 +3,10 @@
 //Cтандарт c++98
 #include <iostream>
 #include <string>
+#include <stdlib.h>
 #include <vector>
 #include <conio.h>
 using namespace std;
-
-//Важное примечание!
-//Для компилятора g++ указать атрибут -std=c++11
 
 vector<vector<int> > LZ77(string);
 string DecodeLZ77(vector<vector<int> >);
@@ -41,7 +39,8 @@ vector<vector<int> > LZ77(string input)
         //если нет сивола, то добавляем в буфер
         while (found == std::string::npos && input[i] != '\0')
         {
-            letters.push_back({ 0,0,input[i] });
+            vector <int> letter(2); letter.push_back(input[i]);
+            letters.push_back(letter);
             buffer += input[i];
             found = buffer.rfind(input[++i]);
         }
@@ -56,9 +55,11 @@ vector<vector<int> > LZ77(string input)
         } while (found != std::string::npos && input[i] != '\0');
 
         found = buffer.rfind(match);
-        letters.push_back({ i - (int) match.length() - (int) found,//вернуться на столько символов
-                        (int) match.length(),//взять столько символов
-                        input[i] });//следующая буква
+        vector <int> letter;
+        letter.push_back(i - (int) match.length() - (int) found);//вернуться на столько символов
+        letter.push_back((int) match.length());//взять столько символов
+        letter.push_back(input[i]);//следующая буква
+        letters.push_back(letter);
         buffer += match + input[i];
     }
     return letters;

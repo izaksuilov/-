@@ -3,12 +3,10 @@
 //Cтандарт c++98
 #include <iostream>
 #include <string>
+#include <stdlib.h>
 #include <vector>
 #include <conio.h>
 using namespace std;
-
-//Важное примечание!
-//Для компилятора g++ указать атррибут -std=c++11
 
 vector<vector<int> > LZSS(string);
 string DecodeLZSS(vector<vector<int> >);
@@ -32,7 +30,7 @@ int main()
     string decoded = DecodeLZSS(result);
     cout << "\n\nInput string: " << input << "\nDecoded:      " << decoded << endl
         << (decoded == input ? "The strings are equal!" : "The strings are not equal!") << endl;
-    //Test();
+    Test();
     _getch();
     return 1;
 }
@@ -48,7 +46,8 @@ vector<vector<int> > LZSS(string input)
         //если нет сивола, то добавляем в буфер
         while (found == std::string::npos && input[i] != '\0')
         {
-            letters.push_back({ 0,input[i] });
+            vector<int> letter(1); letter.push_back(input[i]);
+            letters.push_back(letter);
             buffer += input[i];
             found = buffer.rfind(input[++i]);
         }
@@ -62,9 +61,10 @@ vector<vector<int> > LZSS(string input)
             found = buffer.rfind(match + input[++i]);
         } while (found != std::string::npos && input[i] != '\0');
         found = buffer.rfind(match);
-        letters.push_back({ i - (int) match.length() - (int) found,//вернуться на столько символов
-                        (int) match.length() });//взять столько символов
-        i--;
+        vector<int> letter;
+        letter.push_back(i-- - (int) match.length() - (int) found);//вернуться на столько символов
+        letter.push_back((int) match.length());//взять столько символов
+        letters.push_back(letter);
         buffer += match;
     }
     return letters;
